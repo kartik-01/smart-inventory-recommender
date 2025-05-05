@@ -11,13 +11,19 @@ def process_record(record, products, edges, reviews):
     if record.get('group', '').lower() == 'discontinued product':
         return
 
+    # Extract average rating and number of reviews
+    avg_rating = record.get('avg_rating', None)
+    num_reviews = record.get('num_reviews', None)
+
     # Products table
     products.append({
         'Id': int(record.get('Id')),
         'ASIN': asin,
         'title': record.get('title', ''),
         'salesrank': record.get('salesrank', ''),
-        'group': record.get('group', '')
+        'group': record.get('group', ''),
+        'average_rating': avg_rating,
+        'num_reviews': num_reviews
     })
 
     # Edges table (co-purchase graph)
@@ -77,7 +83,16 @@ def parse_amazon_meta(input_file):
             elif line.strip().startswith('reviews:'):
                 # e.g. reviews: total: 12  downloaded: 12  avg rating: 4.5
                 total_match = re.search(r'total:\s*(\d+)', line)
+                avg_rating_match = re.search(r'avg rating:\s*([\d\.]+)', line)
+
                 total = int(total_match.group(1)) if total_match else 0
+                avg_rating = float(avg_rating_match.group(1)) if avg_rating_match else 0.0
+                
+                # Store these values in the record
+                record['num_reviews'] = total
+                record['avg_rating'] = avg_rating
+
+                # Initialize review_lines for further processing
                 record['review_lines'] = []
                 record['reviews_to_read'] = total
 
