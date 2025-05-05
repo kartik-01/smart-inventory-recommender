@@ -118,9 +118,9 @@ def parse_amazon_meta(input_file):
     df_reviews['date'] = pd.to_datetime(df_reviews['date'], format='%Y-%m-%d', errors='coerce')
 
     # Output CSVs
-    df_products.to_csv('../data/products.csv', index=False)
-    df_edges.to_csv('../data/edges.csv', index=False)
-    df_reviews.to_csv('../data/reviews.csv', index=False)
+    df_products.to_csv('./data/products.csv', index=False)
+    df_edges.to_csv('./data/edges.csv', index=False)
+    df_reviews.to_csv('./data/reviews.csv', index=False)
 
     print(f"Saved: {len(df_products)} products, {len(df_edges)} edges, {len(df_reviews)} reviews to data/ directory")
 
