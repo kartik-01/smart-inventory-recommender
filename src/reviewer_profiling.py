@@ -2,12 +2,6 @@
 """
 Compute reviewer-level profiling features by extracting review info directly from Amazon metadata or a detailed reviews CSV.
 
-Usage:
-  # If you have a detailed reviews CSV:
-  python src/reviewer_profiling.py --reviews data/reviews.csv --output data/reviewer_features.csv
-
-  # Otherwise, parse the raw Amazon metadata file:
-  python src/reviewer_profiling.py --meta data/amazon-meta.txt[.gz] --output data/reviewer_features.csv
 """
 import argparse
 import gzip
